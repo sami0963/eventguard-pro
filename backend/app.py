@@ -54,7 +54,7 @@ def init_db():
     )
     """)
 
-    # إضافة بيانات أولية مرة واحدة فقط
+    # بيانات أولية مرة واحدة فقط
     events_count = c.execute(
         "SELECT COUNT(*) FROM events"
     ).fetchone()[0]
@@ -125,6 +125,7 @@ def home():
     })
 
 
+# API الفعاليات
 @app.get("/api/events")
 def get_events():
     try:
@@ -137,6 +138,7 @@ def get_events():
         return jsonify({"error": str(e)}), 500
 
 
+# API الوظائف
 @app.get("/api/jobs")
 def get_jobs():
     try:
@@ -149,6 +151,7 @@ def get_jobs():
         return jsonify({"error": str(e)}), 500
 
 
+# API الإشعارات
 @app.get("/api/notifications")
 def get_notifications():
     try:
@@ -159,6 +162,26 @@ def get_notifications():
         return jsonify([dict(r) for r in rows])
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+# تشغيل الـ Scraper
+@app.get("/api/scrape/run")
+def run_scraper_api():
+    try:
+        from scraper.event_scraper import run_scraper
+
+        run_scraper()
+
+        return jsonify({
+            "success": True,
+            "message": "Scraper finished successfully 🚦"
+        })
+
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
 
 
 if __name__ == "__main__":
