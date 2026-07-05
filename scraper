@@ -1,1 +1,27 @@
-event_scraper.py
+import requests
+
+def get_events():
+    events = [
+        {
+            "title": "Amsterdam Music Festival",
+            "location": "Amsterdam",
+            "date": "2026-08-01",
+            "type": "festival",
+            "crowd_level": 9,
+            "traffic_needed": True
+        },
+        {
+            "title": "Rotterdam Marathon",
+            "location": "Rotterdam",
+            "date": "2026-08-15",
+            "type": "sport",
+            "crowd_level": 8,
+            "traffic_needed": True
+        }
+    ]
+
+    return events
+
+
+if __name__ == "__main__":
+    print(get_events())
